@@ -2,8 +2,10 @@
 package sms
 
 import (
+	"fmt"
 	"github.com/ferdypruis/iso3166"
 	"golang.org/x/exp/slices"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -61,4 +63,14 @@ func FromSTR(str string) *SMSData {
 	}
 
 	return New(listStr[0], bandwidth, avgRespTime, listStr[3])
+}
+
+// Проверка работы функции FromSTR
+func CheckSms() {
+	rawData, _ := os.ReadFile("../sms.data")
+	strData := strings.Split(string(rawData), "\n")
+	for i := range strData {
+		data := FromSTR(strData[i])
+		fmt.Println(data)
+	}
 }
