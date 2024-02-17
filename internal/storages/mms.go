@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"sort"
 )
 
 type MMSStorage []*mms.MMSData
@@ -39,4 +40,11 @@ func createMMSStorage(url string) (*MMSStorage, error) {
 	}
 
 	return &ms, nil
+}
+
+func (ms MMSStorage) SortCountry() {
+	sortF := func(i, j int) bool {
+		return ms[i].Country < ms[j].Country
+	}
+	sort.SliceStable(ms, sortF)
 }
