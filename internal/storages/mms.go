@@ -48,3 +48,10 @@ func (ms MMSStorage) SortCountry() {
 	}
 	sort.SliceStable(ms, sortF)
 }
+
+func (ms MMSStorage) SortProvider() {
+	sortF := func(i, j int) bool {
+		return ms[i].Provider < ms[j].Provider
+	}
+	sort.SliceStable(ms, sortF)
+}
