@@ -1,6 +1,9 @@
 package storages
 
-import "diplom/internal/sms"
+import (
+	"diplom/internal/sms"
+	"sort"
+)
 
 type SMSStorage []*sms.SMSData
 
@@ -17,4 +20,28 @@ func createSMSStorage(filename string) (*SMSStorage, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	ss := SMSStorage{}
+	for _, s := range smsStr {
+		res := sms.FromSTR(s)
+		if res == nil {
+			continue
+		}
+		ss.Add(res)
+	}
+	return &ss, nil
+}
+
+func (ss SMSStorage) SortCountry() {
+	sortF := func(i, j int) bool {
+		return ss[i].Country < ss[j].Country
+	}
+	sort.SliceStable(ss, sortF)
+}
+
+func (ss SMSStorage) SortProvider() {
+	sortF := func(i, j int) bool {
+		return ss[i].Provider < ss[j].Provider
+	}
+	sort.SliceStable(ss, sortF)
 }
