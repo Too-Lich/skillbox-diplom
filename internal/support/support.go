@@ -5,9 +5,9 @@ package support
 
 type Support struct {
 	Topic         string `json:"topic"`
-	ActiceTickets int    `json:"actice_tickets"`
+	ActiveTickets int    `json:"active_tickets"`
 }
 
 func (s *Support) Check() bool {
-	return s.Topic != "" && s.ActiceTickets != 0
+	return s.Topic != "" && s.ActiveTickets != 0
 }
