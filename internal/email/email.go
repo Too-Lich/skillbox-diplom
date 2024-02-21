@@ -48,7 +48,7 @@ func New(country string, provider string, deliveryTime int) *EmailData {
 	}
 }
 
-func fromSTR(str string) *EmailData {
+func FromSTR(str string) *EmailData {
 	listStr := strings.Split(str, ";")
 	if len(listStr) < 3 {
 		return nil
