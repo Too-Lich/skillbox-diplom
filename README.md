@@ -1,4 +1,4 @@
-# Status of Services
+# Service "Status of Systems"
 ## Финальная работа по курсу Golang-разработчик
 ### Сервис собирает данные о работе систем SMS, MMS, VoiceCall, Email, Billing, Support, Incidents.
 Для работы требуется запускать симулятор исходных данных:   
