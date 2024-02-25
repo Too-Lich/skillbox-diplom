@@ -17,27 +17,25 @@ func NewEmailStorage(filename string) (*EmailStorage, error) {
 }
 
 func createEmailStorage(filename string) (*EmailStorage, error) {
-	emlStr, err := pars.FileToString(filename)
+	emailStr, err := pars.FileToString(filename)
 	if err != nil {
 		return nil, err
 	}
-
 	es := EmailStorage{}
-	for _, s := range emlStr {
+	for _, s := range emailStr {
 		res := email.FromSTR(s)
 		if res == nil {
 			continue
 		}
 		es.Add(res)
 	}
-
 	return &es, nil
 }
 
 func (es EmailStorage) catalogingByCountry() map[string]EmailStorage {
 	emails := map[string]EmailStorage{}
 	for _, email := range es {
-		if _, ok := emails[email.Country]; ok {
+		if _, ok := emails[email.Country]; !ok {
 			emails[email.Country] = EmailStorage{}
 		}
 		emails[email.Country] = append(emails[email.Country], email)
@@ -50,7 +48,6 @@ type Provider struct {
 	avgDeliveryTime float32
 	countEmail      int
 }
-
 type providerStorage []*Provider
 
 func (es EmailStorage) createStatisticProviders() providerStorage {
@@ -60,12 +57,12 @@ func (es EmailStorage) createStatisticProviders() providerStorage {
 		if !ok {
 			providers[el.Provider] = &Provider{
 				Name:            el.Provider,
-				avgDeliveryTime: float32(el.DeliveryTime),
+				avgDeliveryTime: float32(el.AvgDeliveryTime),
 				countEmail:      1,
 			}
 			continue
 		}
-		provider.avgDeliveryTime += float32(el.DeliveryTime)
+		provider.avgDeliveryTime += float32(el.AvgDeliveryTime)
 		provider.countEmail++
 	}
 	providersList := providerStorage{}

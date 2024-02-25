@@ -17,6 +17,7 @@ var allowedProviders = []string{
 	"Gmail",
 	"Yahoo",
 	"Hotmail",
+	"MSN",
 	"Orange",
 	"Comcast",
 	"AOL",
@@ -29,12 +30,12 @@ var allowedProviders = []string{
 }
 
 type EmailData struct {
-	Country      string `json:"country"`
-	Provider     string `json:"provider"`
-	DeliveryTime int    `json:"delivery_time"`
+	Country         string
+	AvgDeliveryTime int
+	Provider        string
 }
 
-func New(country string, provider string, deliveryTime int) *EmailData {
+func New(country, provider string, avgDeliveryTime int) *EmailData {
 	if _, err := iso3166.FromAlpha2(country); err != nil {
 		return nil
 	}
@@ -42,9 +43,9 @@ func New(country string, provider string, deliveryTime int) *EmailData {
 		return nil
 	}
 	return &EmailData{
-		Country:      country,
-		Provider:     provider,
-		DeliveryTime: deliveryTime,
+		Country:         country,
+		AvgDeliveryTime: avgDeliveryTime,
+		Provider:        provider,
 	}
 }
 
@@ -53,9 +54,9 @@ func FromSTR(str string) *EmailData {
 	if len(listStr) < 3 {
 		return nil
 	}
-	deliveryTime, err := strconv.Atoi(listStr[2])
+	avgDeliveryTime, err := strconv.Atoi(listStr[2])
 	if err != nil {
 		return nil
 	}
-	return New(listStr[0], listStr[1], deliveryTime)
+	return New(listStr[0], listStr[1], avgDeliveryTime)
 }

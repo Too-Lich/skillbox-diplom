@@ -8,8 +8,8 @@ import (
 type ResultSetT struct {
 	SMS       []SMSStorage                 `json:"sms"`
 	MMS       []MMSStorage                 `json:"mms"`
-	Email     map[string][]providerStorage `json:"email"`
 	VoiceCall VCStorage                    `json:"voice_call"`
+	Email     map[string][]providerStorage `json:"email"`
 	Billing   billing.BillingData          `json:"billing"`
 	Support   []int                        `json:"support"`
 	Incidents IncidentStorage              `json:"incident"`
@@ -18,7 +18,7 @@ type ResultSetT struct {
 type ResultT struct {
 	Status bool        `json:"status"` // True - если все этапы сбора данных прошли. Иначе = false
 	Data   *ResultSetT `json:"data"`   // Заполнен, если все этапы сбора данных прошли. Иначе = nil
-	Error  []string    `json:"errors"` // Пустая строка, если все этапы сбора данных прошли. Иначе - тест ошибки
+	Error  string      `json:"error"`  // Пустая строка, если все этапы сбора данных прошли. Иначе - тест ошибки
 }
 
 var config = configs.GetConfig()
@@ -28,40 +28,46 @@ func GetResultData() ResultT {
 	status := ResultT{
 		Status: true,
 		Data:   &data,
-		Error:  nil,
+		Error:  "",
 	}
-	errs := []string{}
+	errs := []string{""}
 
+	//data.SMS = []SMSStorage{}
 	smsData, err := smsDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.SMS = smsData
 
+	//data.VoiceCall = VCStorage{}
 	vcData, err := vcDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.VoiceCall = vcData
 
+	//data.Email = map[string][]providerStorage{}
 	emailData, err := emailDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Email = emailData
 
+	//data.Billing = billing.BillingData{}
 	billingData, err := billingDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Billing = billingData
 
+	//data.MMS = []MMSStorage{}
 	mmsData, err := mmsDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.MMS = mmsData
 
+	//data.Support = []int{}
 	supportData, err := supportDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
@@ -73,12 +79,14 @@ func GetResultData() ResultT {
 		errs = append(errs, err.Error())
 	}
 	data.Incidents = incidentData
-
-	if len(errs) > 0 {
-		status.Error = errs
-		status.Status = false
-	}
+	/*
+		if len(errs) > 0 {
+			status.Error = errs
+			status.Status = false
+			}
+	*/
 	return status
+
 }
 
 func smsDataF() ([]SMSStorage, error) {
@@ -125,12 +133,15 @@ func emailDataF() (map[string][]providerStorage, error) {
 	}
 	catalogEmailByCountry := emailStorage.catalogingByCountry()
 	result := map[string][]providerStorage{}
+
 	for country, emails := range catalogEmailByCountry {
+
 		providers := emails.createStatisticProviders()
 		providers.sort()
 		topsProviders := providers.BestAndWorst()
 		result[country] = topsProviders
 	}
+
 	return result, nil
 }
 

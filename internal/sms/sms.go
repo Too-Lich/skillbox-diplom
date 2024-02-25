@@ -17,7 +17,7 @@ var allowedProviders = []string{"Topolo", "Rond", "Kildy"}
 type SMSData struct {
 	Country     string `json:"country"`
 	Bandwidth   int    `json:"bandwidth"`
-	AvgRespTime int    `json:"avg_resp_time"`
+	AvgRespTime int    `json:"response_time"`
 	Provider    string `json:"provider"`
 }
 
