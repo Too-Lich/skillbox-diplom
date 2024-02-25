@@ -7,3 +7,5 @@ require (
 	github.com/go-chi/chi v1.5.5
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a
 )
+
+require github.com/gorilla/mux v1.8.1 // indirect
