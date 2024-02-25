@@ -33,13 +33,13 @@ const maxBandwidth = 100
 const minEmailDeliveryTime = 0
 const maxEmailDeliveryTime = 600
 
-const smsFilename = "../sms.data"
-const mmsApiUrl = "http://localhost:8282/mms" // to params
-const voiceFilename = "../voice.data"
-const emailFilename = "email.data"
-const billingFilename = "billing.data"
-const supportApiUrl = "http://localhost:8282/support"
-const accendentListFilename = "accendents.data"
+const smsFilename = "./data/sms.data"
+const mmsApiUrl = "http://localhost:8383/mms" // to params
+const voiceFilename = "./data/voice.data"
+const emailFilename = "./data/email.data"
+const billingFilename = "./data/billing.data"
+const supportApiUrl = "http://localhost:8383/support"
+const accendentListFilename = "http://localhost:8383/accendents"
 
 var firstSMSRowForCorrupt int
 var secondSMSRowForCorrupt int

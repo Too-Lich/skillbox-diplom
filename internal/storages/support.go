@@ -5,6 +5,7 @@ import (
 	"diplom/pkg/apiRequest"
 	"diplom/pkg/pars"
 	"fmt"
+	"log"
 )
 
 type SupportStorage []*support.Support
@@ -19,6 +20,7 @@ func createSupportStorage(url string) (*SupportStorage, error) {
 	if resp == nil {
 		return &ss, fmt.Errorf("Ошибка данных Support")
 	}
+	log.Printf("Чтение url   %v", url)
 	if err := pars.JSON(&ss, resp.Body); err != nil {
 		return &ss, err
 	}

@@ -4,6 +4,7 @@ import (
 	"diplom/internal/mms"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"sort"
 )
@@ -32,6 +33,7 @@ func createMMSStorage(url string) (*MMSStorage, error) {
 		return nil, err
 	}
 	ms := MMSStorage{}
+	log.Printf("Чтение url   %v", url)
 	for _, elem := range buf {
 		m := mms.New(elem["country"].(string), elem["provider"].(string), elem["bandwidth"].(string), elem["response_time"].(string))
 		if m != nil {

@@ -31,41 +31,49 @@ func GetResultData() ResultT {
 		Error:  nil,
 	}
 	errs := []string{}
+
 	smsData, err := smsDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.SMS = smsData
-	mmsData, err := mmsDataF()
-	if err != nil {
-		errs = append(errs, err.Error())
-	}
-	data.MMS = mmsData
+
 	vcData, err := vcDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.VoiceCall = vcData
+
 	emailData, err := emailDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Email = emailData
+
 	billingData, err := billingDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Billing = billingData
+
+	mmsData, err := mmsDataF()
+	if err != nil {
+		errs = append(errs, err.Error())
+	}
+	data.MMS = mmsData
+
 	supportData, err := supportDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Support = supportData
+
 	incidentData, err := incidentDataF()
 	if err != nil {
 		errs = append(errs, err.Error())
 	}
 	data.Incidents = incidentData
+
 	if len(errs) > 0 {
 		status.Error = errs
 		status.Status = false

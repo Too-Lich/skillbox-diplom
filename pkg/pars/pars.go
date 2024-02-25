@@ -15,7 +15,7 @@ func FileToString(filePath string) ([]string, error) {
 }
 
 func ReadFile(filePath string) ([]byte, error) {
-	log.Printf("Extract data from file `%v`", filePath)
+	log.Printf("Чтение файла `%v`", filePath)
 	content, err := os.ReadFile(filePath)
 	return content, err
 }

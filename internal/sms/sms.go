@@ -67,7 +67,7 @@ func FromSTR(str string) *SMSData {
 
 // Проверка работы функции FromSTR
 func CheckSms() {
-	rawData, _ := os.ReadFile("../sms.data")
+	rawData, _ := os.ReadFile("./data/sms.data")
 	strData := strings.Split(string(rawData), "\n")
 	for i := range strData {
 		data := FromSTR(strData[i])

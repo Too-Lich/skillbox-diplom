@@ -5,6 +5,7 @@ import (
 	"diplom/pkg/apiRequest"
 	"diplom/pkg/pars"
 	"fmt"
+	"log"
 	"sort"
 )
 
@@ -20,6 +21,7 @@ func createIncidentStorage(url string) (*IncidentStorage, error) {
 	if resp == nil {
 		return &is, fmt.Errorf("ошибка получения данных Incident")
 	}
+	log.Printf("Чтение url   %v", url)
 	if err := pars.JSON(&is, resp.Body); err != nil {
 		return &is, err
 	}

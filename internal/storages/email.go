@@ -21,6 +21,7 @@ func createEmailStorage(filename string) (*EmailStorage, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	es := EmailStorage{}
 	for _, s := range emlStr {
 		res := email.FromSTR(s)
