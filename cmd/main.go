@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	log.Println("Start server")
+	log.Println("Запуск сервера")
 	r := routes.CreateRouter()
 	err := http.ListenAndServe(":8080", r)
 	if err != nil {
